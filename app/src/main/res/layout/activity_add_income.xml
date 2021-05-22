@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddIncomeActivity">
+
+    <EditText
+        android:id="@+id/editText_income_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Income title"
+        android:layout_marginTop="40dp" />
+
+
+    <Spinner
+        android:id="@+id/income_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_income_title"
+        android:layout_marginTop="40dp" />
+
+    <EditText
+        android:id="@+id/editText_income"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Add income"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/income_spinner"
+        />
+
+
+    <Button
+        android:id="@+id/button_add_income"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add income"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/editText_income"
+         />
+
+</RelativeLayout>
