@@ -19,8 +19,10 @@
         android:id="@+id/textview_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/name" />
+        android:textSize="20sp"
+        android:textStyle="bold|italic" />
 
     <TextView
         android:id="@+id/text"
@@ -35,8 +37,10 @@
         android:id="@+id/textview_balance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/text" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btn_to_add_income"
@@ -51,9 +55,18 @@
         android:id="@+id/btn_to_add_expense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_below="@+id/btn_to_add_income"
         android:text="Add Expense"
+        />
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log out"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/btn_to_add_expense"
+
         />
 
     <ListView
@@ -61,7 +74,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/btn_to_add_expense"/>
+        android:layout_below="@id/btn_logout"/>
+
+
 
 
 </RelativeLayout>

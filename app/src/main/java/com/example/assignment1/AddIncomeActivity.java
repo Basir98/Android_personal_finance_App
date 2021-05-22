@@ -56,8 +56,6 @@ public class AddIncomeActivity extends AppCompatActivity {
                 if(strTitle.equals("") || addIncome.getText().toString().equals("")){
                     Toast.makeText(AddIncomeActivity.this, "Please fill all credentials", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(AddIncomeActivity.this, "Title: "+strTitle+", Added Income: "+intAddIncome+", selected: "+selected, Toast.LENGTH_SHORT).show();
-
                     Cursor cursor = DB.getUserInfo(UserModel.username);
                     if(cursor.getCount()==0) {
                         Toast.makeText(AddIncomeActivity.this, "No Data", Toast.LENGTH_SHORT).show();
@@ -65,7 +63,6 @@ public class AddIncomeActivity extends AppCompatActivity {
                         if(cursor.moveToLast()){
                             String userN = cursor.getString(0);
                             int currentBalance = cursor.getInt(1);
-                            Toast.makeText(AddIncomeActivity.this, "Username: "+userN+" Current balance: "+currentBalance, Toast.LENGTH_SHORT).show();
                             currentBalance += intAddIncome;
                             Boolean checked = DB.modifyBalance(userN, currentBalance, "Income", strTitle, selected, intAddIncome);
                             if(checked == true){

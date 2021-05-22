@@ -3,6 +3,7 @@ package com.example.assignment1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,12 +25,15 @@ public class MainActivity extends AppCompatActivity {
         balance = (EditText) findViewById(R.id.balance);
         btnSignUp = (Button) findViewById(R.id.btnsignup);
         btnLogin = (Button) findViewById(R.id.btnsignin);
+        btnLogin.setBackgroundColor(Color.BLUE);
+        btnSignUp.setBackgroundColor(Color.GRAY);
 
         DB = new DatabaseHelper(this);
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try{
                 String user =username.getText().toString();
                 String bala = balance.getText().toString();
 
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "User already exists!", Toast.LENGTH_SHORT).show();
                     }
                 }
+                } catch (Exception e){ }
             }
         });
 

@@ -10,7 +10,7 @@
         android:id="@+id/editText_expense_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Income title"
+        android:hint="Expense title"
         android:layout_marginTop="40dp" />
 
 
@@ -25,7 +25,7 @@
         android:id="@+id/editText_expense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Add income in SEK"
+        android:hint="Add expense in SEK"
         android:layout_marginTop="40dp"
         android:layout_below="@+id/expense_spinner"
         />

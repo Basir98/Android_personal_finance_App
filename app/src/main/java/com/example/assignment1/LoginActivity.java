@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
                     }else {
-                        Toast.makeText(LoginActivity.this, "Invalid username", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Invalid username or User is not created! Try Again", Toast.LENGTH_SHORT).show();
                     }
                 }
 

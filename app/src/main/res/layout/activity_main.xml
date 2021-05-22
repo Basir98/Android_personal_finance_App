@@ -28,7 +28,8 @@
         android:layout_height="wrap_content"
         android:text="Register"
         android:layout_marginTop="50dp"
-        android:layout_below="@+id/balance"/>
+        android:layout_below="@+id/balance"
+        />
 
     <Button
         android:id="@+id/btnsignin"
@@ -36,8 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnsignup"
         android:layout_marginTop="50dp"
-        android:text="Existing user! Go to Login page"
-        android:textColor="#FFC107" />
+        android:text="Go to Login page" />
 
 
 
