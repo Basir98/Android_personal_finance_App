@@ -1,20 +1,33 @@
-package com.example.assignment1;
+ package com.example.assignment1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class  MainActivity extends AppCompatActivity {
 
     EditText username, balance;
     Button btnSignUp, btnLogin;
     DatabaseHelper DB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setBackgroundColor(Color.BLUE);
         btnSignUp.setBackgroundColor(Color.GRAY);
 
-        DB = new DatabaseHelper(this);
 
+        DB = new DatabaseHelper(this);
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,4 +86,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 }

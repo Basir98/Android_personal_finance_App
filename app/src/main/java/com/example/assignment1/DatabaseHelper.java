@@ -70,7 +70,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-
     public Boolean modifyBalance(String username, int balance, String type, String title, String selected, int amount){
         //("Create Table users(username TEXT, balance INT, type TEXT, title TEXT, category TEXT, amount INT)");
         SQLiteDatabase MyDB = this.getWritableDatabase();
@@ -114,6 +113,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor viewData(String username){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("Select * from users WHERE username = ? LIMIT 50 OFFSET 1", new String[] {username});
+        return cursor;
+    }
+
+    public Cursor viewSpecificTypeData(String username, String str){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("Select * from users WHERE username = ? AND type = ?", new String[] {username, str});
         return cursor;
     }
 

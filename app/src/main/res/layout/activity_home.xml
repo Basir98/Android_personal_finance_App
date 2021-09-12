@@ -11,7 +11,7 @@
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Username"
         android:textStyle="bold|italic" />
 
@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textview_username"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:text="Balance"
         android:textStyle="bold|italic" />
 
@@ -60,13 +60,20 @@
         />
 
     <Button
+        android:id="@+id/btn_to_separate_lists"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_to_add_expense"
+        android:text="Show Separate lists"
+        />
+
+    <Button
         android:id="@+id/btn_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Log out"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/btn_to_add_expense"
-
+        android:layout_below="@+id/btn_to_separate_lists"
         />
 
     <ListView
@@ -75,7 +82,6 @@
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
         android:layout_below="@id/btn_logout"/>
-
 
 
 

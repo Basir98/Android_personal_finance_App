@@ -17,7 +17,11 @@ import java.util.List;
 
 public class AddIncomeActivity extends AppCompatActivity {
     Spinner spinner;
-    List<String> spinnerArray = new ArrayList<String>();
+    CustomAdapter customAdapter;
+
+    String[] category = {"Salary", "Other"};
+    int[] images = {R.drawable.ic_salary, R.drawable.ic_other};
+
 
     EditText addIncome, title;
     Button btnAddIncome;
@@ -29,16 +33,13 @@ public class AddIncomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_income);
 
-        spinnerArray.add("Salary");
-        spinnerArray.add("Other");
 
         DB = new DatabaseHelper(this);
 
         spinner = (Spinner) findViewById(R.id.income_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+
+        customAdapter = new CustomAdapter(this, category, images);
+        spinner.setAdapter(customAdapter);
 
 
         title = (EditText) findViewById(R.id.editText_income_title);

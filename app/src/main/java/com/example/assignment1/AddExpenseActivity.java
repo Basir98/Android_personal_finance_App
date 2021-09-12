@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +18,10 @@ import java.util.List;
 
 public class AddExpenseActivity extends AppCompatActivity {
     Spinner spinner;
-    List<String> spinnerArray = new ArrayList<String>();
+    CustomAdapter customAdapter;
+
+    String[] category = {"Food", "Leisure", "Travel", "Accommodation", "Other"};
+    int[] images = {R.drawable.ic_food, R.drawable.ic_leisure, R.drawable.ic_travel, R.drawable.ic_accommodation, R.drawable.ic_other};
 
     EditText addExpense, title;
     Button btnAddExpense;
@@ -28,19 +32,12 @@ public class AddExpenseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
 
-        spinnerArray.add("Food");
-        spinnerArray.add("Leisure");
-        spinnerArray.add("Travel");
-        spinnerArray.add("Accommodation");
-        spinnerArray.add("Other");
-
         DB = new DatabaseHelper(this);
         spinner = (Spinner) findViewById(R.id.expense_spinner);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        customAdapter = new CustomAdapter(this, category, images);
+        spinner.setAdapter(customAdapter);
+
 
         title = (EditText) findViewById(R.id.editText_expense_title);
         addExpense = (EditText) findViewById(R.id.editText_expense);
@@ -54,6 +51,10 @@ public class AddExpenseActivity extends AppCompatActivity {
                 String strTitle = title.getText().toString();
                 int intAddExpense = Integer.parseInt(addExpense.getText().toString());
                 String selected = spinner.getSelectedItem().toString();
+
+                Toast.makeText(AddExpenseActivity.this, "Selected: "+selected, Toast.LENGTH_SHORT).show();
+
+
                 if(strTitle.equals("") || addExpense.getText().toString().equals("")){
                     Toast.makeText(AddExpenseActivity.this, "Please fill all credentials", Toast.LENGTH_SHORT).show();
                 }else {
@@ -78,11 +79,10 @@ public class AddExpenseActivity extends AppCompatActivity {
                     }
                 }
 
+
             } catch (Exception e){ }
             }
         });
-
-
 
 
 

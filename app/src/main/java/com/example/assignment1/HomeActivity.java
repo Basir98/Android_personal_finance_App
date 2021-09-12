@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,11 +20,12 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity {
     TextView tv_username, tv_balance;
     DatabaseHelper DB;
-    Button btn_addIncome, btn_addExpense, btn_logout;
+    Button btn_addIncome, btn_addExpense, btn_logout, btn_separateLists;
 
     ArrayList<String> listItem;
     ArrayAdapter adapter;
     ListView userList;
+
 
 
     @Override
@@ -37,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
         userList = (ListView) findViewById(R.id.listView);
         btn_logout = (Button) findViewById(R.id.btn_logout);
         btn_logout.setBackgroundColor(Color.RED);
+        btn_separateLists = (Button) findViewById(R.id.btn_to_separate_lists);
         listItem = new ArrayList<>();
 
         DB = new DatabaseHelper(this);
@@ -58,8 +62,31 @@ public class HomeActivity extends AppCompatActivity {
                             "  "+cursor1.getColumnName(4)+ "  "+cursor1.getColumnName(5)+ "  "+cursor1.getColumnName(6));
 
                     while(cursor1.moveToNext()){
+                        String strCategory="";
+                        switch (cursor1.getString(4)){
+                            case "Food":
+                                strCategory = "Food";
+                                break;
+                            case "Leisure":
+                                strCategory = "Leisure";
+                                break;
+                            case "Travel":
+                                strCategory = "Travel";
+                                break;
+                            case "Accommodation":
+                                strCategory = "Accommodation";
+                                break;
+                            case "Other":
+                                strCategory = "Other";
+                                break;
+                            case "Salary":
+                                strCategory = "Salary";
+                                break;
+
+                        }
                         listItem.add(cursor1.getString(2) +"  "+cursor1.getString(3)
-                                    + "  " +cursor1.getString(4)+ "  "+cursor1.getInt(5)+"  "+cursor1.getString(6));
+                                    + "  " +strCategory+ "  "+cursor1.getInt(5)+"  "+cursor1.getString(6));
+
 
                     }
                     adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItem);
@@ -86,6 +113,15 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        btn_separateLists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SeparateListsActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +130,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showCategoryIcon(String str){
+        switch (str){
+            case "Food":
+
+        }
     }
 
 }
