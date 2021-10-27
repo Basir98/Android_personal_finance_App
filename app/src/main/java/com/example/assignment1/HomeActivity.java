@@ -58,8 +58,8 @@ public class HomeActivity extends AppCompatActivity {
                 if(cursor1.getCount()== 0){
                     Toast.makeText(this, "No Data to Show in list", Toast.LENGTH_SHORT).show();
                 }else {
-                    listItem.add(0, cursor1.getColumnName(3)+ "     "+cursor1.getColumnName(4)+
-                            "  "+cursor1.getColumnName(5)+ "  "+cursor1.getColumnName(6)+ "  "+cursor1.getColumnName(7));
+                    listItem.add(0, cursor1.getColumnName(3)+ "       |  "+cursor1.getColumnName(4)+
+                            "  |  "+cursor1.getColumnName(5)+ " | "+cursor1.getColumnName(6)+ " | "+cursor1.getColumnName(7));
 
                     while(cursor1.moveToNext()){
                         String strCategory="";
@@ -84,8 +84,8 @@ public class HomeActivity extends AppCompatActivity {
                                 break;
 
                         }
-                        listItem.add(cursor1.getString(3) +"  "+cursor1.getString(4)
-                                    + "  " +strCategory+ "  "+cursor1.getInt(6)+"  "+cursor1.getString(7));
+                        listItem.add(cursor1.getString(3) +"   "+cursor1.getString(4)
+                                    + "   " +strCategory+ "   "+cursor1.getInt(6)+" kr    "+cursor1.getString(7));
 
 
                     }

@@ -67,22 +67,21 @@
         android:text="Show Separate lists"
         />
 
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="wrap_content"
+        android:layout_height="260dp"
+        android:layout_below="@id/btn_to_separate_lists"
+        android:layout_marginTop="20dp" />
+
+
     <Button
         android:id="@+id/btn_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Log out"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/btn_to_separate_lists"
-        />
-
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/btn_logout"/>
-
+        android:layout_below="@+id/listView"
+        android:layout_marginTop="10dp"
+        android:text="Log out" />
 
 
 </RelativeLayout>

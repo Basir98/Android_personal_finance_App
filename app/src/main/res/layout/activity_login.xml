@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:hint="Username" />
 
     <EditText
@@ -19,6 +21,8 @@
         android:layout_height="wrap_content"
         android:hint="Password"
         android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:inputType="textPassword"
         android:layout_below="@+id/username1"/>
 
@@ -28,6 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/passwordLogin"
         android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:text="Login" />
 
 </RelativeLayout>
