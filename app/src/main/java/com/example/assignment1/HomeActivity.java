@@ -58,12 +58,12 @@ public class HomeActivity extends AppCompatActivity {
                 if(cursor1.getCount()== 0){
                     Toast.makeText(this, "No Data to Show in list", Toast.LENGTH_SHORT).show();
                 }else {
-                    listItem.add(0, cursor1.getColumnName(2)+ "     "+cursor1.getColumnName(3)+
-                            "  "+cursor1.getColumnName(4)+ "  "+cursor1.getColumnName(5)+ "  "+cursor1.getColumnName(6));
+                    listItem.add(0, cursor1.getColumnName(3)+ "     "+cursor1.getColumnName(4)+
+                            "  "+cursor1.getColumnName(5)+ "  "+cursor1.getColumnName(6)+ "  "+cursor1.getColumnName(7));
 
                     while(cursor1.moveToNext()){
                         String strCategory="";
-                        switch (cursor1.getString(4)){
+                        switch (cursor1.getString(5)){
                             case "Food":
                                 strCategory = "Food";
                                 break;
@@ -84,8 +84,8 @@ public class HomeActivity extends AppCompatActivity {
                                 break;
 
                         }
-                        listItem.add(cursor1.getString(2) +"  "+cursor1.getString(3)
-                                    + "  " +strCategory+ "  "+cursor1.getInt(5)+"  "+cursor1.getString(6));
+                        listItem.add(cursor1.getString(3) +"  "+cursor1.getString(4)
+                                    + "  " +strCategory+ "  "+cursor1.getInt(6)+"  "+cursor1.getString(7));
 
 
                     }
@@ -130,13 +130,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void showCategoryIcon(String str){
-        switch (str){
-            case "Food":
-
-        }
     }
 
 }

@@ -20,18 +20,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase MyDB) {
-        MyDB.execSQL("Create Table users(username TEXT, balance INT, type TEXT, title TEXT, category TEXT, amount INT, calendar TEXT)");
+        MyDB.execSQL("Create Table users(username TEXT, password TEXT, balance INT, type TEXT, title TEXT, category TEXT, amount INT, calendar TEXT)");
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 
-    }
-
-    public Boolean insertData(String username, int balance){
+    public Boolean insertData(String username, String password, int balance){
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", username);
+        contentValues.put("password", password);
         contentValues.put("balance", balance);
         contentValues.put("type", "");
         contentValues.put("title", "");
@@ -54,9 +53,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
-    public Boolean checkUserForLogin(String username){
+    public Boolean checkUserForLogin(String username, String password){
         SQLiteDatabase MyDB = this.getReadableDatabase();
-        Cursor cursor = MyDB.rawQuery("Select * from users where username = ?",new String[] {username});
+        Cursor cursor = MyDB.rawQuery("Select * from users where username = ? AND password = ?",new String[] {username, password});
         if(cursor.getCount() > 0)
             return true;
         else
@@ -71,13 +70,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Boolean modifyBalance(String username, int balance, String type, String title, String selected, int amount){
-        //("Create Table users(username TEXT, balance INT, type TEXT, title TEXT, category TEXT, amount INT)");
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", username);
         contentValues.put("balance", balance);
         contentValues.put("type", type);            // income or expense
-        //contentValues.put("d1", )
         contentValues.put("title", title);          // case title
         contentValues.put("category", selected);    // category like Salary or Food
         contentValues.put("amount", amount);

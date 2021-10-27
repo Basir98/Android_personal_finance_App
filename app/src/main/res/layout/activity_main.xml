@@ -12,22 +12,31 @@
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="User Name"
+        android:hint="Username"
         android:layout_marginTop="50dp"/>
+
+    <EditText
+        android:id="@+id/userPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_marginTop="50dp"/>
+
 
     <EditText
         android:id="@+id/balance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter User Balance"
+        android:hint="Enter user balance"
         android:layout_marginTop="50dp"
-        android:layout_below="@id/username" />
+        android:layout_below="@id/userPassword" />
 
     <Button
         android:id="@+id/btnsignup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="Register User"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/balance"
         />

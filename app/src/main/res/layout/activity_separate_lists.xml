@@ -12,6 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20dp"
         android:text="Income List" />
 
     <ListView
@@ -25,9 +27,11 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/income_list"
         android:layout_marginTop="20dp"
-        android:text="Expense list"
-        android:layout_below="@+id/income_list"/>
+        android:layout_marginLeft="20dp"
+        android:textSize="20dp"
+        android:text="Expense list" />
 
 
     <ListView

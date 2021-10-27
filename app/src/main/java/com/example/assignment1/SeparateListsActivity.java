@@ -87,17 +87,17 @@ public class SeparateListsActivity extends AppCompatActivity {
 
                     while(cursorIncome.moveToNext()){
 
-                        incomeArrayTitle.add(cursorIncome.getString(3));
-                        incomeArrayAmount.add(cursorIncome.getInt(5));
-                        incomeArrayCategory.add(cursorIncome.getString(4));
-                        incomeArrayCalendar.add(cursorIncome.getString(6));
+                        incomeArrayTitle.add(cursorIncome.getString(4));
+                        incomeArrayAmount.add(cursorIncome.getInt(6));
+                        incomeArrayCategory.add(cursorIncome.getString(5));
+                        incomeArrayCalendar.add(cursorIncome.getString(7));
                     }
                     while(cursorExpense.moveToNext()){
 
-                        expenseArrayTitle.add(cursorExpense.getString(3));
-                        expenseArrayAmount.add(cursorExpense.getInt(5));
-                        expenseArrayCategory.add(cursorExpense.getString(4));
-                        expenseArrayCalendar.add(cursorExpense.getString(6));
+                        expenseArrayTitle.add(cursorExpense.getString(4));
+                        expenseArrayAmount.add(cursorExpense.getInt(6));
+                        expenseArrayCategory.add(cursorExpense.getString(5));
+                        expenseArrayCalendar.add(cursorExpense.getString(7));
 
                     }
 

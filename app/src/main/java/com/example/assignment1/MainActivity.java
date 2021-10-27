@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class  MainActivity extends AppCompatActivity {
 
-    EditText username, balance;
+    EditText username, userPassword, userBalance;
     Button btnSignUp, btnLogin;
     DatabaseHelper DB;
 
@@ -35,11 +35,12 @@ public class  MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         username = (EditText) findViewById(R.id.username);
-        balance = (EditText) findViewById(R.id.balance);
+        userPassword = (EditText) findViewById(R.id.userPassword);
+        userBalance = (EditText) findViewById(R.id.balance);
         btnSignUp = (Button) findViewById(R.id.btnsignup);
         btnLogin = (Button) findViewById(R.id.btnsignin);
         btnLogin.setBackgroundColor(Color.BLUE);
-        btnSignUp.setBackgroundColor(Color.GRAY);
+        btnSignUp.setBackgroundColor(Color.BLACK);
 
 
         DB = new DatabaseHelper(this);
@@ -47,31 +48,38 @@ public class  MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try{
+                String password = userPassword.getText().toString();
                 String user =username.getText().toString();
-                String bala = balance.getText().toString();
+                String bala = userBalance.getText().toString();
 
-                if(user.equals("") || bala.equals("")){
+                if(user.equals("") || bala.equals("")  || password.equals("")){
                     Toast.makeText(MainActivity.this, "Please enter alla the fields", Toast.LENGTH_SHORT).show();
                 }else{
-                    Boolean checkUser = DB.checkusername(user);
-                    if(checkUser == false){
-                        Boolean insert = DB.insertData(user, Integer.parseInt(bala));
-                        if(insert == true){
-                            Toast.makeText(MainActivity.this, "Registered successfully",Toast.LENGTH_SHORT).show();
-                            Boolean check = DB.checkUserForLogin(user);
-                            if(check == true){
-                                UserModel.username = user;
-                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                                startActivity(intent);
-                            }
+                    if(password.length() >= 5){
+                        Boolean checkUser = DB.checkusername(user);
+                        if(checkUser == false){
+                            Boolean insert = DB.insertData(user, password, Integer.parseInt(bala));
+                            if(insert == true){
+                                Toast.makeText(MainActivity.this, "Registered successfully",Toast.LENGTH_SHORT).show();
+                                Boolean check = DB.checkUserForLogin(user, password);
+                                if(check == true){
+                                    UserModel.username = user;
+                                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                    startActivity(intent);
+                                }
 
+                            }else {
+                                Toast.makeText(MainActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                            }
                         }else {
-                            Toast.makeText(MainActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "User already exists! Try again with a different username", Toast.LENGTH_SHORT).show();
                         }
+
                     }else {
-                        Toast.makeText(MainActivity.this, "User already exists!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Password is too short, try again with a different password!", Toast.LENGTH_SHORT).show();
                     }
                 }
+
                 } catch (Exception e){ }
             }
         });
