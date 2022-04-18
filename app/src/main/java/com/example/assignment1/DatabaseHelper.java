@@ -13,7 +13,6 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-
     public DatabaseHelper(Context context) {
         super(context, "Finance.db", null, 1);
     }
@@ -24,9 +23,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    }
 
-    public Boolean insertData(String username, String password, int balance){
+    public Boolean insertData(String username, String password, int balance) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", username);
@@ -38,38 +38,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("amount", 0);
         contentValues.put("calendar", "");
         long result = MyDB.insert("users", null, contentValues);
-        if(result == -1)
+        if (result == -1)
             return false;
         else
             return true;
     }
 
-    public Boolean checkusername(String username){
+    public Boolean checkusername(String username) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
-        Cursor cursor =MyDB.rawQuery("Select * from users where username = ?", new String[] {username});
-        if(cursor.getCount() > 0)
+        Cursor cursor = MyDB.rawQuery("Select * from users where username = ?", new String[]{username});
+        if (cursor.getCount() > 0)
             return true;
         else
             return false;
     }
 
-    public Boolean checkUserForLogin(String username, String password){
+    public Boolean checkUserForLogin(String username, String password) {
         SQLiteDatabase MyDB = this.getReadableDatabase();
-        Cursor cursor = MyDB.rawQuery("Select * from users where username = ? AND password = ?",new String[] {username, password});
-        if(cursor.getCount() > 0)
+        Cursor cursor = MyDB.rawQuery("Select * from users where username = ? AND password = ?", new String[]{username, password});
+        if (cursor.getCount() > 0)
             return true;
         else
             return false;
     }
 
     // get username and user balance
-    public Cursor getUserInfo(String username){
+    public Cursor getUserInfo(String username) {
         SQLiteDatabase MyDB = this.getReadableDatabase();
-        Cursor cursor =MyDB.rawQuery("Select username, balance FROM users where username = ?", new String[] {username});
+        Cursor cursor = MyDB.rawQuery("Select username, balance FROM users where username = ?", new String[]{username});
         return cursor;
     }
 
-    public Boolean modifyBalance(String username, int balance, String type, String title, String selected, int amount){
+    public Boolean modifyBalance(String username, int balance, String type, String title, String selected, int amount) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", username);
@@ -83,7 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("calendar", currentDate);
 
         long result = MyDB.insert("users", null, contentValues);
-        if(result == -1)
+        if (result == -1)
             return false;
         else
             return true;
@@ -92,21 +92,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<UserModel> getEveryOne(String username) {
         List<UserModel> returnList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM users where username = ?", new String[] {username});
-        if(cursor.moveToFirst()){
-            do{
-                String userN =cursor.getString(0);
+        Cursor cursor = db.rawQuery("SELECT * FROM users where username = ?", new String[]{username});
+        if (cursor.moveToFirst()) {
+            do {
+                String userN = cursor.getString(0);
                 int userBalance = cursor.getInt(1);
                 //returnList.add(userModel);
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         cursor.close();
-        db.close();
         return returnList;
     }
 
-    // view data in SQLite
-    // en gräns på 50 rader är satt på tabellen
+    /**
+     * view data in SQLite, en gräns på 50 rader är satt på tabellen
+     * @param username
+     * @return
+     */
     public Cursor viewData(String username){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("Select * from users WHERE username = ? LIMIT 50 OFFSET 1", new String[] {username});
@@ -118,6 +120,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("Select * from users WHERE username = ? AND type = ?", new String[] {username, str});
         return cursor;
     }
-
-
 }

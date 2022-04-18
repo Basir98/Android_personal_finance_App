@@ -27,6 +27,7 @@ public class  MainActivity extends AppCompatActivity {
     EditText username, userPassword, userBalance;
     Button btnSignUp, btnLogin;
     DatabaseHelper DB;
+    Controller controller = new Controller();
 
 
     @Override
@@ -50,34 +51,33 @@ public class  MainActivity extends AppCompatActivity {
                 try{
                 String password = userPassword.getText().toString();
                 String user =username.getText().toString();
-                String bala = userBalance.getText().toString();
+                String balance = userBalance.getText().toString();
 
-                if(user.equals("") || bala.equals("")  || password.equals("")){
-                    Toast.makeText(MainActivity.this, "Please enter alla the fields", Toast.LENGTH_SHORT).show();
-                }else{
-                    if(password.length() >= 5){
-                        Boolean checkUser = DB.checkusername(user);
-                        if(checkUser == false){
-                            Boolean insert = DB.insertData(user, password, Integer.parseInt(bala));
-                            if(insert == true){
-                                Toast.makeText(MainActivity.this, "Registered successfully",Toast.LENGTH_SHORT).show();
-                                Boolean check = DB.checkUserForLogin(user, password);
-                                if(check == true){
-                                    UserModel.username = user;
-                                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                                    startActivity(intent);
-                                }
+                boolean result = controller.checkUserInput(user, password, balance);
+
+                if(result){
+                    boolean passwordResult = controller.checkUserPassword(password);
+                    if(passwordResult){
+                        boolean res = controller.handleSignup(user, password, balance, DB);
+                        if(res){
+                            controller.setToastText("Registered successfully", MainActivity.this);
+                            UserModel.username = user;
+                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                            startActivity(intent);
+                        }else {
+                            boolean userNameResult = controller.checkForUsername(user, DB);
+                            if(userNameResult){
+                                controller.setToastText("User already exists! Try again with a different username", MainActivity.this);
 
                             }else {
-                                Toast.makeText(MainActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                                controller.setToastText("Registration failed", MainActivity.this);
                             }
-                        }else {
-                            Toast.makeText(MainActivity.this, "User already exists! Try again with a different username", Toast.LENGTH_SHORT).show();
                         }
-
-                    }else {
-                        Toast.makeText(MainActivity.this, "Password is too short, try again with a different password!", Toast.LENGTH_SHORT).show();
+                    }else{
+                        controller.setToastText("Password must include number and capital letters, try again with a different password!", MainActivity.this);
                     }
+                }else {
+                    controller.setToastText("Please enter alla the fields", MainActivity.this);
                 }
 
                 } catch (Exception e){ }
@@ -91,8 +91,27 @@ public class  MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
+
+    public void handleSignup(String username, String password, String balance){
+        Boolean checkUser = DB.checkusername(username);
+        if(checkUser == false){
+            Boolean insert = DB.insertData(username, password, Integer.parseInt(balance));
+            if(insert == true){
+                controller.setToastText("Registered successfully", MainActivity.this);
+                Boolean check = DB.checkUserForLogin(username, password);
+                if(check == true){
+                    UserModel.username = username;
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                }
+            }else {
+                controller.setToastText("Registration failed", MainActivity.this);
+            }
+        }else {
+            controller.setToastText("User already exists! Try again with a different username", MainActivity.this);
+        }
+    }
+
 
 }
