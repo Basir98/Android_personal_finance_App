@@ -1,5 +1,6 @@
 package com.example.assignment1;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -38,35 +39,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("amount", 0);
         contentValues.put("calendar", "");
         long result = MyDB.insert("users", null, contentValues);
-        if (result == -1)
-            return false;
-        else
-            return true;
+        return result != -1;
     }
 
     public Boolean checkusername(String username) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
-        Cursor cursor = MyDB.rawQuery("Select * from users where username = ?", new String[]{username});
-        if (cursor.getCount() > 0)
-            return true;
-        else
-            return false;
+        @SuppressLint("Recycle") Cursor cursor = MyDB.rawQuery("Select * from users where username = ?", new String[]{username});
+        return cursor.getCount() > 0;
     }
 
     public Boolean checkUserForLogin(String username, String password) {
         SQLiteDatabase MyDB = this.getReadableDatabase();
-        Cursor cursor = MyDB.rawQuery("Select * from users where username = ? AND password = ?", new String[]{username, password});
-        if (cursor.getCount() > 0)
-            return true;
-        else
-            return false;
+        @SuppressLint("Recycle") Cursor cursor = MyDB.rawQuery("Select * from users where username = ? AND password = ?", new String[]{username, password});
+        return cursor.getCount() > 0;
     }
+
+    public String getHashedPassword(String username){
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        @SuppressLint("Recycle") Cursor cursor = MyDB.rawQuery("Select password from users where username = ?", new String[]{username});
+        if (cursor.moveToFirst()) {
+            do {
+                return cursor.getString(0);
+            } while (cursor.moveToNext());
+        } else
+            return null;
+    }
+
 
     // get username and user balance
     public Cursor getUserInfo(String username) {
         SQLiteDatabase MyDB = this.getReadableDatabase();
-        Cursor cursor = MyDB.rawQuery("Select username, balance FROM users where username = ?", new String[]{username});
-        return cursor;
+        return MyDB.rawQuery("Select username, balance FROM users where username = ?", new String[]{username});
     }
 
     public Boolean modifyBalance(String username, int balance, String type, String title, String selected, int amount) {
@@ -83,10 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("calendar", currentDate);
 
         long result = MyDB.insert("users", null, contentValues);
-        if (result == -1)
-            return false;
-        else
-            return true;
+        return result != -1;
     }
 
     public List<UserModel> getEveryOne(String username) {
@@ -97,7 +97,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 String userN = cursor.getString(0);
                 int userBalance = cursor.getInt(1);
-                //returnList.add(userModel);
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -106,18 +105,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * view data in SQLite, en gräns på 50 rader är satt på tabellen
-     * @param username
-     * @return
+     * @return cursor
      */
     public Cursor viewData(String username){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("Select * from users WHERE username = ? LIMIT 50 OFFSET 1", new String[] {username});
-        return cursor;
+        return db.rawQuery("Select * from users WHERE username = ? LIMIT 50 OFFSET 1", new String[] {username});
     }
 
     public Cursor viewSpecificTypeData(String username, String str){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("Select * from users WHERE username = ? AND type = ?", new String[] {username, str});
-        return cursor;
+        return db.rawQuery("Select * from users WHERE username = ? AND type = ?", new String[] {username, str});
     }
 }
