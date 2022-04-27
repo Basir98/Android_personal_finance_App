@@ -10,10 +10,7 @@ public class Controller {
 
 
     public boolean checkUserInput(String username, String password, String balance){
-        if(username.equals("") || password.equals("") || balance.equals("")){
-            return false;
-        }
-        return true;
+        return !username.equals("") && !password.equals("") && !balance.equals("");
     }
 
     public boolean checkUserPassword(String password){
@@ -23,10 +20,7 @@ public class Controller {
 
         Matcher matcher1 = pattern.matcher(password);
 
-        if(password.length() > 5 && matcher1.matches()){
-            return true;
-        }
-        return false;
+        return password.length() > 5 && matcher1.matches();
     }
 
     public void setToastText(String strText, Activity activity){
@@ -35,16 +29,11 @@ public class Controller {
 
     public boolean handleSignup(String username, String password, String balance, DatabaseHelper DB){
         Boolean checkUser = DB.checkusername(username);
-        if(checkUser == false){
+        if(!checkUser){
             Boolean insert = DB.insertData(username, password, Integer.parseInt(balance));
-            if(insert == true){
-                Boolean check = DB.checkUserForLogin(username, password);
-                if(check == true){
-                    return true;
-                }
-            }else {
+            if(insert){
+                return DB.checkUserForLogin(username, password);
             }
-        }else {
         }
         return false;
     }
