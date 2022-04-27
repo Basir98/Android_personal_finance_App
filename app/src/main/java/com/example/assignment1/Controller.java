@@ -2,12 +2,10 @@ package com.example.assignment1;
 
 import android.app.Activity;
 import android.widget.Toast;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Controller {
-
 
     public boolean checkUserInput(String username, String password, String balance){
         return !username.equals("") && !password.equals("") && !balance.equals("");
@@ -27,20 +25,11 @@ public class Controller {
         Toast.makeText(activity, strText, Toast.LENGTH_SHORT).show();
     }
 
-    public boolean handleSignup(String username, String password, String balance, DatabaseHelper DB){
-        Boolean checkUser = DB.checkusername(username);
-        if(!checkUser){
-            Boolean insert = DB.insertData(username, password, Integer.parseInt(balance));
-            if(insert){
-                return DB.checkUserForLogin(username, password);
-            }
-        }
-        return false;
+    public String truncate(String str, int length) {
+        assert length >= 3 : length;
+        if (str.length() <= length)
+            return str;
+        else
+            return str.substring(0, length) + "..";
     }
-
-    public boolean checkForUsername(String username, DatabaseHelper DB){
-        return DB.checkusername(username);
-    }
-
-
 }

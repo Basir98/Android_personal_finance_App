@@ -1,14 +1,11 @@
 package com.example.assignment1;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 public class AddIncomeActivity extends AppCompatActivity {
     Spinner spinner;
@@ -20,6 +17,8 @@ public class AddIncomeActivity extends AppCompatActivity {
     EditText addIncome, title;
     Button btnAddIncome;
     DatabaseHelper DB;
+    Controller controller = new Controller();
+    DatabaseController databaseController = new DatabaseController();
 
 
     @Override
@@ -38,35 +37,32 @@ public class AddIncomeActivity extends AppCompatActivity {
 
         btnAddIncome.setOnClickListener(v -> {
             try{
-
-            String strTitle = title.getText().toString();
-            int intAddIncome = Integer.parseInt(addIncome.getText().toString());
-            String selected = spinner.getSelectedItem().toString();
-            if(strTitle.equals("") || addIncome.getText().toString().equals("")){
-                Toast.makeText(AddIncomeActivity.this, "Please fill all credentials", Toast.LENGTH_SHORT).show();
-            }else {
-                Cursor cursor = DB.getUserInfo(UserModel.username);
-                if(cursor.getCount()==0) {
-                    Toast.makeText(AddIncomeActivity.this, "No Data", Toast.LENGTH_SHORT).show();
-                }else {
-                    if(cursor.moveToLast()){
-                        String userN = cursor.getString(0);
-                        int currentBalance = cursor.getInt(1);
-                        currentBalance += intAddIncome;
-                        Boolean checked = DB.modifyBalance(userN, currentBalance, "Income", strTitle, selected, intAddIncome);
-                        if(checked){
-                            Toast.makeText(AddIncomeActivity.this, "Process succeed", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                            startActivity(intent);
-
-                        }else {
-                            Toast.makeText(AddIncomeActivity.this, "Process failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-            }
+            handleAddIncome(title.getText().toString(), addIncome.getText().toString(), spinner.getSelectedItem().toString());
             } catch (Exception ignored){ }
         });
-
     }
+
+    public void handleAddIncome(String title, String addIncomeAmount, String selected){
+        try{
+            if(title.equals("") || addIncomeAmount.equals("")){
+                controller.setToastText("Please fill all credentials", AddIncomeActivity.this);
+            }else if(title.length()< 5){
+                controller.setToastText("Income title is too short", AddIncomeActivity.this);
+            }
+            else {
+                int intAddIncomeAmount = Integer.parseInt(addIncomeAmount);
+                boolean result = databaseController.handleAddIncome(title, intAddIncomeAmount, selected, DB);
+                if(result){
+                    controller.setToastText("Process succeed", AddIncomeActivity.this);
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                }else {
+                    controller.setToastText("Process failed", AddIncomeActivity.this);
+                }
+            }
+        }catch (NumberFormatException e) {
+            controller.setToastText(addIncomeAmount+" is not valid integer", AddIncomeActivity.this);
+        }
+    }
+
 }

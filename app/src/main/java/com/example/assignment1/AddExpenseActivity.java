@@ -1,14 +1,11 @@
 package com.example.assignment1;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 public class AddExpenseActivity extends AppCompatActivity {
     Spinner spinner;
@@ -20,6 +17,8 @@ public class AddExpenseActivity extends AppCompatActivity {
     EditText addExpense, title;
     Button btnAddExpense;
     DatabaseHelper DB;
+    Controller controller = new Controller();
+    DatabaseController databaseController = new DatabaseController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,41 +33,36 @@ public class AddExpenseActivity extends AppCompatActivity {
 
         title = findViewById(R.id.editText_expense_title);
         addExpense = findViewById(R.id.editText_expense);
-
         btnAddExpense = findViewById(R.id.button_add_expense);
+
         btnAddExpense.setOnClickListener(v -> {
             try {
-
-            String strTitle = title.getText().toString();
-            int intAddExpense = Integer.parseInt(addExpense.getText().toString());
-            String selected = spinner.getSelectedItem().toString();
-
-            Toast.makeText(AddExpenseActivity.this, "Selected: "+selected, Toast.LENGTH_SHORT).show();
-
-            if(strTitle.equals("") || addExpense.getText().toString().equals("")){
-                Toast.makeText(AddExpenseActivity.this, "Please fill all credentials", Toast.LENGTH_SHORT).show();
-            }else {
-                Cursor cursor = DB.getUserInfo(UserModel.username);
-                if(cursor.getCount()==0) {
-                    Toast.makeText(AddExpenseActivity.this, "No Data", Toast.LENGTH_SHORT).show();
-                }else {
-                    if(cursor.moveToLast()){
-                        String userN = cursor.getString(0);
-                        int currentBalance = cursor.getInt(1);
-                        currentBalance -= intAddExpense;
-                        Boolean checked = DB.modifyBalance(userN, currentBalance, "Expense", strTitle, selected, intAddExpense);
-                        if(checked){
-                            Toast.makeText(AddExpenseActivity.this, "Process succeed", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                            startActivity(intent);
-
-                        }else {
-                            Toast.makeText(AddExpenseActivity.this, "Process failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-            }
+            handleAddExpense(title.getText().toString(), addExpense.getText().toString(), spinner.getSelectedItem().toString());
         } catch (Exception ignored){ }
         });
     }
+
+    public void handleAddExpense(String title, String addExpenseAmount, String selected){
+        try{
+            if(title.equals("") || addExpenseAmount.equals("")){
+                controller.setToastText("Please fill all credentials", AddExpenseActivity.this);
+            }else if(title.length()< 5){
+                controller.setToastText("Expense title is too short", AddExpenseActivity.this);
+            }
+            else {
+                int intAddExpenseAmount = Integer.parseInt(addExpenseAmount);
+                boolean result = databaseController.handleAddExpense(title, intAddExpenseAmount, selected, DB);
+                if(result){
+                    controller.setToastText("Process succeed", AddExpenseActivity.this);
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                }else{
+                    controller.setToastText("Process failed", AddExpenseActivity.this);
+                }
+            }
+        }catch (NumberFormatException e) {
+            controller.setToastText(addExpenseAmount+" is not valid integer", AddExpenseActivity.this);
+        }
+    }
+
 }

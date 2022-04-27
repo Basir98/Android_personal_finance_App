@@ -7,13 +7,14 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText editText_username, editTextPassword;
     Button btnLogin;
     DatabaseHelper DB;
+    Controller controller = new Controller();
+    DatabaseController databaseController = new DatabaseController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +33,14 @@ public class LoginActivity extends AppCompatActivity {
             if(user.equals("")){
                 Toast.makeText(LoginActivity.this, "Please enter a user name", Toast.LENGTH_SHORT).show();
             }else {
-                String bcryptHashString = DB.getHashedPassword(user);
-                if(bcryptHashString.isEmpty()){
-                    Toast.makeText(this, "Login unsuccessful", Toast.LENGTH_SHORT).show();
-                }else{
-                    BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), bcryptHashString);
-                    if(result.verified){
-                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                        UserModel.username = user;
-                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                        startActivity(intent);
-                    }else{
-                        Toast.makeText(LoginActivity.this, "Invalid user info or User is not created! Try Again", Toast.LENGTH_SHORT).show();
-                    }
+                boolean result = databaseController.handleHashedPassword(user, password, DB);
+                if(result){
+                    controller.setToastText("Login successful", LoginActivity.this);
+                    UserModel.username = user;
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                }else {
+                    controller.setToastText("Invalid user info or User is not created! Try Again", LoginActivity.this);
                 }
             }
         });

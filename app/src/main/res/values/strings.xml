@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Personal finance app</string>
+    <string name="welcome_message">Welcome to Personal finance app!</string>
+    <string name = "username">Username</string>
+    <string name = "password">Password</string>
+    <string name = "balance">Balance</string>
+    <string name = "title">Title</string>
+    <string name = "amount">Amount in SEK</string>
+    <string name = "expense">Expense</string>
+    <string name = "income">Income</string>
+    <string name = "add_expense">Add Expense</string>
+    <string name = "add_income">Add Income</string>
+    <string name = "log_in">Log in</string>
+    <string name = "log_out">Log out</string>
+    <string name = "sign_in">Sign in</string>
+    <string name = "sign_out">Sign out</string>
+    <string name = "category">Category</string>
+    <string name = "date">Date</string>
+    <string name = "image">Image</string>
 </resources>

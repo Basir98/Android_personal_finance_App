@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,8 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:textSize="20dp"
-        android:text="Income List" />
+        android:textSize="20sp"
+        android:text="Income List"
+        android:layout_marginStart="20dp"
+        tools:ignore="HardcodedText" />
 
     <ListView
         android:id="@+id/income_list"
@@ -30,8 +31,10 @@
         android:layout_below="@+id/income_list"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:textSize="20dp"
-        android:text="Expense list" />
+        android:textSize="20sp"
+        android:text="Expense list"
+        android:layout_marginStart="20dp"
+        tools:ignore="HardcodedText" />
 
 
     <ListView
@@ -49,7 +52,7 @@
         android:text="Back to Home"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        />
+        tools:ignore="HardcodedText" />
 
 
 

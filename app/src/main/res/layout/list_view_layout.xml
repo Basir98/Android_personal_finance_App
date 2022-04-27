@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:baselineAligned="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,10 +16,10 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="25"
-            />
+            android:contentDescription="@string/image"
+            tools:ignore="InefficientWeight,NestedWeights" />
 
     </LinearLayout>
-
 
     <LinearLayout
         android:orientation="vertical"
@@ -32,21 +33,18 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:textAlignment="center"
-            android:text="Title"
+            android:text="@string/title"
             />
-
 
         <TextView
             android:id="@+id/listView_amountText"
             android:gravity="center"
             android:textAlignment="center"
-            android:text="5000"
+            android:text="@string/amount"
             android:layout_width="match_parent"
             android:layout_height="30dp"  />
 
     </LinearLayout>
-
-
 
     <LinearLayout
         android:orientation="vertical"
@@ -57,7 +55,7 @@
         <TextView
             android:id="@+id/listView_category"
             android:gravity="center"
-            android:text="category"
+            android:text="@string/category"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             />
@@ -65,16 +63,10 @@
         <TextView
             android:id="@+id/listView_calendar"
             android:gravity="center"
-            android:text="2020-02-02"
+            android:text="@string/date"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_below="@+id/listView_amount"
             />
-
-
     </LinearLayout>
-
-
-
 
 </LinearLayout>

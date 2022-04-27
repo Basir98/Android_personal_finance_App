@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
@@ -21,6 +20,8 @@ public class HomeActivity extends AppCompatActivity {
     ArrayList<String> listItem;
     ArrayAdapter<String> adapter;
     ListView userList;
+    DatabaseController databaseController = new DatabaseController();
+    Controller controller = new Controller();
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -38,56 +39,7 @@ public class HomeActivity extends AppCompatActivity {
         btn_separateLists = findViewById(R.id.btn_to_separate_lists);
         listItem = new ArrayList<>();
 
-        DB = new DatabaseHelper(this);
-        Cursor cursor = DB.getUserInfo(UserModel.username);
-        if(cursor.getCount()==0) {
-            Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
-        }else {
-            while(cursor.moveToNext()){
-                tv_username.setText(cursor.getString(0));
-                tv_balance.setText(cursor.getInt(1)+ " SEK");
-
-                listItem.clear();
-                // list of saving and expenses
-                Cursor cursor1 = DB.viewData(cursor.getString(0));
-                if(cursor1.getCount()== 0){
-                    Toast.makeText(this, "No Data to Show in list", Toast.LENGTH_SHORT).show();
-                }else {
-                    listItem.add(0, cursor1.getColumnName(3)+ "       |  "+cursor1.getColumnName(4)+
-                            "  |  "+cursor1.getColumnName(5)+ " | "+cursor1.getColumnName(6)+ " | "+cursor1.getColumnName(7));
-
-                    while(cursor1.moveToNext()){
-                        String strCategory="";
-                        switch (cursor1.getString(5)){
-                            case "Food":
-                                strCategory = "Food";
-                                break;
-                            case "Leisure":
-                                strCategory = "Leisure";
-                                break;
-                            case "Travel":
-                                strCategory = "Travel";
-                                break;
-                            case "Accommodation":
-                                strCategory = "Accommodation";
-                                break;
-                            case "Other":
-                                strCategory = "Other";
-                                break;
-                            case "Salary":
-                                strCategory = "Salary";
-                                break;
-
-                        }
-                        listItem.add(cursor1.getString(3) +"   "+cursor1.getString(4)
-                                    + "   " +strCategory+ "   "+cursor1.getInt(6)+" kr    "+cursor1.getString(7));
-
-                    }
-                    adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listItem);
-                    userList.setAdapter(adapter);
-                }
-            }
-        }
+        handleUserIncomeAndExpenseList();
 
         btn_addIncome.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), AddIncomeActivity.class);
@@ -109,7 +61,25 @@ public class HomeActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
         });
+    }
 
+    @SuppressLint("SetTextI18n")
+    public void handleUserIncomeAndExpenseList(){
+        DB = new DatabaseHelper(this);
+        Cursor cursor = databaseController.handleUserList(DB);
+        if(cursor.getCount()==0) {
+            controller.setToastText("No Data", HomeActivity.this);
+        }else {
+            while(cursor.moveToNext()){
+                tv_username.setText(cursor.getString(0));
+                tv_balance.setText(cursor.getInt(1)+ " SEK");
+
+                // list of incomes and expenses
+                listItem = databaseController.populateUserIncomeAndExpenseList(listItem, cursor, DB);
+                adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listItem);
+                userList.setAdapter(adapter);
+            }
+        }
     }
 
 }
