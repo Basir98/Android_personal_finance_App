@@ -1,25 +1,18 @@
 package com.example.assignment1;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 
 public class SeparateListsActivity extends AppCompatActivity {
@@ -44,13 +37,9 @@ public class SeparateListsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_separate_lists);
 
-        lw_income_list = (ListView) findViewById(R.id.income_list);
-        lw_expense_list = (ListView) findViewById(R.id.expense_list);
-
-        btnBackToHome = (Button) findViewById(R.id.btn_back_to_home);
-
-        //incomeList =new ArrayList<>();
-        //expenseList =new ArrayList<>();
+        lw_income_list = findViewById(R.id.income_list);
+        lw_expense_list = findViewById(R.id.expense_list);
+        btnBackToHome = findViewById(R.id.btn_back_to_home);
 
         incomeArrayTitle = new ArrayList<>();
         incomeArrayAmount= new ArrayList<>();
@@ -98,10 +87,8 @@ public class SeparateListsActivity extends AppCompatActivity {
                         expenseArrayAmount.add(cursorExpense.getInt(6));
                         expenseArrayCategory.add(cursorExpense.getString(5));
                         expenseArrayCalendar.add(cursorExpense.getString(7));
-
                     }
-
-                    }
+                }
             }
         }
 
@@ -157,34 +144,11 @@ public class SeparateListsActivity extends AppCompatActivity {
 
         lw_expense_list.setAdapter(userAdapterExpense);
 
-        btnBackToHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
-            }
+        btnBackToHome.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
         });
-
-
-        /*
-        lw_income_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(SeparateListsActivity.this, "Item: "+adapter1.getItem(position), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        lw_expense_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(SeparateListsActivity.this, "Item: "+adapter2.getItem(position), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-         */
-
     }
-
 
     class UserAdapter extends BaseAdapter {
 
@@ -217,18 +181,16 @@ public class SeparateListsActivity extends AppCompatActivity {
             return 0;
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            View view = getLayoutInflater().inflate(R.layout.list_view_layout, null);
-
-
-            ImageView mImageView = (ImageView) view.findViewById(R.id.category_image_show);
-            TextView mTextTitle = (TextView) view.findViewById(R.id.listView_titleText);
-            TextView mTextAmount = (TextView) view.findViewById(R.id.listView_amountText);
-            TextView mTextCategory = (TextView) view.findViewById(R.id.listView_category);
-            TextView mTextCalendar = (TextView) view.findViewById(R.id.listView_calendar);
-
+            @SuppressLint({"InflateParams", "ViewHolder"}) View view = getLayoutInflater().inflate(R.layout.list_view_layout, null);
+            ImageView mImageView = view.findViewById(R.id.category_image_show);
+            TextView mTextTitle = view.findViewById(R.id.listView_titleText);
+            TextView mTextAmount = view.findViewById(R.id.listView_amountText);
+            TextView mTextCategory = view.findViewById(R.id.listView_category);
+            TextView mTextCalendar = view.findViewById(R.id.listView_calendar);
 
             mImageView.setImageResource(images[position]);
             mTextTitle.setText(title[position]);
@@ -242,9 +204,8 @@ public class SeparateListsActivity extends AppCompatActivity {
 
     public static String[] GetStringArray(ArrayList<String> arr)
     {
-
         // declaration and initialise String Array
-        String str[] = new String[arr.size()];
+        String[] str = new String[arr.size()];
 
         // ArrayList to Array Conversion
         for (int j = 0; j < arr.size(); j++) {
@@ -252,7 +213,6 @@ public class SeparateListsActivity extends AppCompatActivity {
             // Assign each value to String array
             str[j] = arr.get(j);
         }
-
         return str;
     }
 
