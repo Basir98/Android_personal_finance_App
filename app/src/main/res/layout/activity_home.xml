@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -48,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/textview_balance"
-        android:text="Add Income"
+        android:text="@string/add_income"
         />
 
     <Button
@@ -56,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_to_add_income"
-        android:text="Add Expense"
+        android:text="@string/add_expense"
         />
 
     <Button
@@ -65,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_to_add_expense"
         android:text="Show Separate lists"
-        />
+        tools:ignore="HardcodedText" />
 
     <ListView
         android:id="@+id/listView"
@@ -81,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/listView"
         android:layout_marginTop="10dp"
-        android:text="Log out" />
+        android:text="@string/log_out" />
 
 
 </RelativeLayout>
