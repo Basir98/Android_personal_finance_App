@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Username"
+        android:text="@string/username"
         android:textStyle="bold|italic" />
 
     <TextView
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textview_username"
         android:layout_marginTop="10dp"
-        android:text="Balance"
+        android:text="@string/balance"
         android:textStyle="bold|italic" />
 
     <TextView

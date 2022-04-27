@@ -8,9 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -100,5 +98,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor viewSpecificTypeData(String username, String str){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("Select * from users WHERE username = ? AND type = ?", new String[] {username, str});
+    }
+
+    public void deleteUser(String username){
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("DELETE from users WHERE username = ?", new String[]{username});
+        db.close();
     }
 }

@@ -13,6 +13,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
     Button btnSignUp, btnLogin;
     DatabaseHelper DB;
     Controller controller = new Controller();
+    DatabaseController databaseController = new DatabaseController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +39,10 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 
                     handleSignup(user, bcryptHashString, balance);
                 } catch (Exception ignored){ }
-
             }else {
                 controller.setToastText("Password must include number and capital letters, try again with a different password!", MainActivity.this);
             }
         });
-
         btnLogin.setOnClickListener(v -> {
             Intent intent =new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
@@ -53,14 +52,14 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
     public void handleSignup(String username, String hashPassword, String balance){
         boolean result = controller.checkUserInput(username, hashPassword, balance);
         if(result){
-            boolean res = controller.handleSignup(username, hashPassword, balance, DB);
+            boolean res = databaseController.handleSignup(username, hashPassword, balance, DB);
             if(res){
                 controller.setToastText("Registered successfully", MainActivity.this);
                 UserModel.username = username;
                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intent);
             }else {
-                boolean userNameResult = controller.checkForUsername(username, DB);
+                boolean userNameResult = databaseController.checkForUsername(username, DB);
                 if(userNameResult){
                     controller.setToastText("User already exists! Try again with a different username", MainActivity.this);
                 }else {
