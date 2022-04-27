@@ -36,28 +36,9 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
                     String user =username.getText().toString();
                     String balance = userBalance.getText().toString();
 
-                    boolean result = controller.checkUserInput(user, bcryptHashString, balance);
-                    if(result){
-                        boolean res = controller.handleSignup(user, bcryptHashString, balance, DB);
-                        if(res){
-                            controller.setToastText("Registered successfully", MainActivity.this);
-                            UserModel.username = user;
-                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                            startActivity(intent);
-                        }else {
-                            boolean userNameResult = controller.checkForUsername(user, DB);
-                            if(userNameResult){
-                                controller.setToastText("User already exists! Try again with a different username", MainActivity.this);
-
-                            }else {
-                                controller.setToastText("Registration failed", MainActivity.this);
-                            }
-                        }
-                    }else {
-                        controller.setToastText("Please enter alla the fields", MainActivity.this);
-                    }
-
+                    handleSignup(user, bcryptHashString, balance);
                 } catch (Exception ignored){ }
+
             }else {
                 controller.setToastText("Password must include number and capital letters, try again with a different password!", MainActivity.this);
             }
@@ -69,7 +50,25 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
         });
     }
 
-    public void handleSignup(String username, String password, String balance){
-
+    public void handleSignup(String username, String hashPassword, String balance){
+        boolean result = controller.checkUserInput(username, hashPassword, balance);
+        if(result){
+            boolean res = controller.handleSignup(username, hashPassword, balance, DB);
+            if(res){
+                controller.setToastText("Registered successfully", MainActivity.this);
+                UserModel.username = username;
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+            }else {
+                boolean userNameResult = controller.checkForUsername(username, DB);
+                if(userNameResult){
+                    controller.setToastText("User already exists! Try again with a different username", MainActivity.this);
+                }else {
+                    controller.setToastText("Registration failed", MainActivity.this);
+                }
+            }
+        }else {
+            controller.setToastText("Please enter alla the fields", MainActivity.this);
+        }
     }
 }

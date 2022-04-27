@@ -58,11 +58,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase MyDB = this.getReadableDatabase();
         @SuppressLint("Recycle") Cursor cursor = MyDB.rawQuery("Select password from users where username = ?", new String[]{username});
         if (cursor.moveToFirst()) {
-            do {
                 return cursor.getString(0);
-            } while (cursor.moveToNext());
-        } else
-            return null;
+        } else{
+            return "";
+        }
     }
 
 
@@ -87,20 +86,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long result = MyDB.insert("users", null, contentValues);
         return result != -1;
-    }
-
-    public List<UserModel> getEveryOne(String username) {
-        List<UserModel> returnList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM users where username = ?", new String[]{username});
-        if (cursor.moveToFirst()) {
-            do {
-                String userN = cursor.getString(0);
-                int userBalance = cursor.getInt(1);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return returnList;
     }
 
     /**
