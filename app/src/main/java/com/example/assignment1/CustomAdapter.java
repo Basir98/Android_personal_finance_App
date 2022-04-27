@@ -1,5 +1,6 @@
 package com.example.assignment1;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
 
 
 public class CustomAdapter extends ArrayAdapter<String> {
@@ -25,11 +26,11 @@ public class CustomAdapter extends ArrayAdapter<String> {
 
 
     @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+    public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = inflater.inflate(R.layout.spinner_item, null);
-        TextView t1 = (TextView) row.findViewById(R.id.spinner_textView);
-        ImageView image = (ImageView) row.findViewById(R.id.spinner_imageView);
+        @SuppressLint("InflateParams") View row = inflater.inflate(R.layout.spinner_item, null);
+        TextView t1 = row.findViewById(R.id.spinner_textView);
+        ImageView image = row.findViewById(R.id.spinner_imageView);
         t1.setText(categoryType[position]);
         image.setImageResource(images[position]);
 
@@ -39,9 +40,9 @@ public class CustomAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = inflater.inflate(R.layout.spinner_item, null);
-        TextView t1 = (TextView) row.findViewById(R.id.spinner_textView);
-        ImageView image = (ImageView) row.findViewById(R.id.spinner_imageView);
+        @SuppressLint({"InflateParams", "ViewHolder"}) View row = inflater.inflate(R.layout.spinner_item, null);
+        TextView t1 = row.findViewById(R.id.spinner_textView);
+        ImageView image = row.findViewById(R.id.spinner_imageView);
         t1.setText(categoryType[position]);
         image.setImageResource(images[position]);
 
