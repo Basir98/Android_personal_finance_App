@@ -19,26 +19,32 @@
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/username"
         android:layout_marginTop="50dp"
-        android:layout_below="@id/welcome_text" />
+        android:autofillHints=""
+        android:hint="@string/username"
+        android:inputType="textPersonName"
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/userPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:autofillHints=""
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:layout_marginTop="50dp"/>
+        android:minHeight="48dp" />
 
 
     <EditText
         android:id="@+id/balance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/balance"
         android:layout_marginTop="50dp"
-        android:layout_below="@id/userPassword" />
+        android:autofillHints=""
+        android:hint="@string/balance"
+        android:inputType="number"
+        android:minHeight="48dp" />
 
     <Button
         android:id="@+id/btnsignup"
@@ -46,19 +52,14 @@
         android:layout_height="wrap_content"
         android:text="Register User"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/balance"
-        />
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnsignin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnsignup"
         android:layout_marginTop="20dp"
-        android:text="Go to Login page" />
-
-
-
-
+        android:text="Go to Login page"
+        tools:ignore="HardcodedText" />
 
 </LinearLayout>
